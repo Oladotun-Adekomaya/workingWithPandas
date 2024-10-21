@@ -27,13 +27,17 @@ def is_file_content_empty(df,file):
       file1.close()
 
 def check_bad_number(df,file,columnHeader):
-   num = df[columnHeader].str.startswith('0').sum()
+   badNumberList = ['0','1','3','4','5','6','7','8','9']
+   for n in badNumberList:
+       
+        num = df[columnHeader].str.startswith(n).sum()
 
-   if num > 10:
-      st = f'{file}\n\n'
-      file1 = open("badfiles.txt", "a")
-      file1.write(st)
-      file1.close()
+        if num > 10:
+            st = f'{file}\nStarts with {n}\n\n'
+            file1 = open("badfiles.txt", "a")
+            file1.write(st)
+            file1.close()
+
 
 
 def append_df(df1, df2, columnTitle):

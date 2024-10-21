@@ -20,7 +20,7 @@ columnHeader = 'Phone'
 
 for file in files:
     check_file_size(path,file)  
-    
+
     log(file) 
     
     # open the file
@@ -33,24 +33,52 @@ for file in files:
     df[columnHeader]= df[columnHeader].astype(str)
 
     # Check if the file starts with specific numbers and log the file name and directory to badfiles for proper investigation
-    check_bad_number(file,columnHeader)
+    # num = df[columnHeader].str.startswith('0').sum()
+    # if num > 10:
+    #     st = f'{file}\n\n'
+    #     file1 = open("badfiles.txt", "a")
+    #     file1.write(st)
+    #     file1.close()
+
+    check_bad_number(df,file,columnHeader)
+
     
     # Append dataframe to the dataframe list
     dfList.append(df)
 
+print('Finished creating list of dataframes.')
+
+print(dfList)
+
 # join all the dataframe in the dataframe list into one.
 newdf = pd.concat(dfList, ignore_index = True)
+print('\n\nFinished creating new Dataframe from list of dataFrame')
+print(newdf)
 
 #remove duplicates
 newdf.drop_duplicates(subset=[columnHeader],inplace=True,keep='first')
+print("\n\nFinish removing duplicates")
+print(newdf)
 
+# mastersheet = pd.read_csv(mastersheetPath)
 mastersheet = pd.read_csv(mastersheetPath)
-
-append_df(mastersheet,newdf,columnHeader)
-
-# convert dataframe to csv file 
-
+print("\n\nFinish creating mastersheet dataframe")
 print(mastersheet)
 
+# convert mastersheet phone column to string
+mastersheet[columnHeader]= mastersheet[columnHeader].astype(str)
+print("\n\nConverted mastersheet phone column to string")
+print(mastersheet)
 
+# Get unique Phone number - numbers present in newdf but not in mastersheet
+df_diff = newdf[~newdf.Phone.isin(mastersheet.Phone)]
 
+print(df_diff)
+
+newMastersheet = pd.concat([mastersheet, df_diff], ignore_index=True)
+
+print(newMastersheet)
+
+newMastersheet.to_csv('whatsappGroupLeadMastersheet.csv',index=False)
+
+newMastersheet.to_csv(mastersheetPath,index=False)

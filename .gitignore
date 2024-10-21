@@ -2,3 +2,5 @@ badfiles.txt
 log.txt
 .env
 whatsappGroupLeadMastersheet.csv
+__pycache__
+test.py
