@@ -1,6 +1,6 @@
-import pandas as pd
+import pandas as pd # type: ignore
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
 from methods import append_df, check_bad_number, check_file_size, is_file_content_empty, log, open_file
 
