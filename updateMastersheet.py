@@ -32,6 +32,8 @@ for file in files:
     is_file_content_empty(df,file)
 
     # Turn the phone column which contains numbers to text
+    df = df.fillna(0)
+    df[columnHeader]= df[columnHeader].astype(int)
     df[columnHeader]= df[columnHeader].astype(str)
 
     # Check if the file starts with specific numbers and log the file name and directory to badfiles for proper investigation
@@ -68,6 +70,8 @@ print("\n\nFinish creating mastersheet dataframe")
 print(mastersheet)
 
 # convert mastersheet phone column to string
+# mastersheet = mastersheet.fillna(0)
+# mastersheet[columnHeader]= mastersheet[columnHeader].astype(int)
 mastersheet[columnHeader]= mastersheet[columnHeader].astype(str)
 print("\n\nConverted mastersheet phone column to string")
 # print(mastersheet)
@@ -81,6 +85,7 @@ print(df_diff)
 newMastersheet = pd.concat([mastersheet, df_diff], ignore_index=True)
 
 # convert newMastersheet phone column to string
+# newMastersheet[columnHeader] = newMastersheet[columnHeader].astype(int)
 # newMastersheet[columnHeader]= '+' + newMastersheet[columnHeader].astype(str)
 
 print("\n\nConverted newMastersheet phone column to string")
@@ -90,6 +95,6 @@ print(newMastersheet)
 
 print(newMastersheet)
 
-newMastersheet.to_csv('whatsappGroupLeadMastersheet.csv',index=False)
+newMastersheet.to_csv('test.csv',index=False)
 
 # newMastersheet.to_csv(mastersheetPath,index=False)

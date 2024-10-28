@@ -28,7 +28,9 @@ for file in files:
     is_file_content_empty(df,file)
 
     # Turn the phone column which contains numbers to text
-    df[columnHeader]= df[columnHeader].astype(str)
+    df = df.fillna(0) #first fill all the nan values in the df
+    df[columnHeader]= df[columnHeader].astype(int) #convert the ddf to int to remove .0
+    df[columnHeader]= '+' + df[columnHeader].astype(str)
 
     # Check if the file starts with specific numbers and log the file name and directory to badfiles for proper investigation
     check_bad_number(df,file,columnHeader)
