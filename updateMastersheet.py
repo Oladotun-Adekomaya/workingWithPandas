@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv # type: ignore
 
 from methods import append_df, check_bad_number, check_file_size, is_file_content_empty, log, open_file
+# from openpyxl.workbook import Workbook
+import xlsxwriter
 
 
 path=os.getenv('path')
@@ -73,12 +75,14 @@ print("\n\nConverted mastersheet phone column to string")
 # Get unique Phone number - numbers present in newdf but not in mastersheet
 df_diff = newdf[~newdf.Phone.isin(mastersheet.Phone)]
 
+df_diff[columnHeader]= '+' + df_diff[columnHeader].astype(str)
 print(df_diff)
 
 newMastersheet = pd.concat([mastersheet, df_diff], ignore_index=True)
 
 # convert newMastersheet phone column to string
-newMastersheet[columnHeader]= '+' + newMastersheet[columnHeader].astype(str)
+# newMastersheet[columnHeader]= '+' + newMastersheet[columnHeader].astype(str)
+
 print("\n\nConverted newMastersheet phone column to string")
 print(newMastersheet)
 
@@ -88,4 +92,4 @@ print(newMastersheet)
 
 newMastersheet.to_csv('whatsappGroupLeadMastersheet.csv',index=False)
 
-newMastersheet.to_csv(mastersheetPath,index=False)
+# newMastersheet.to_csv(mastersheetPath,index=False)
