@@ -68,7 +68,7 @@ print(mastersheet)
 # convert mastersheet phone column to string
 mastersheet[columnHeader]= mastersheet[columnHeader].astype(str)
 print("\n\nConverted mastersheet phone column to string")
-print(mastersheet)
+# print(mastersheet)
 
 # Get unique Phone number - numbers present in newdf but not in mastersheet
 df_diff = newdf[~newdf.Phone.isin(mastersheet.Phone)]
@@ -76,6 +76,13 @@ df_diff = newdf[~newdf.Phone.isin(mastersheet.Phone)]
 print(df_diff)
 
 newMastersheet = pd.concat([mastersheet, df_diff], ignore_index=True)
+
+# convert newMastersheet phone column to string
+newMastersheet[columnHeader]= '+' + newMastersheet[columnHeader].astype(str)
+print("\n\nConverted newMastersheet phone column to string")
+print(newMastersheet)
+
+
 
 print(newMastersheet)
 
